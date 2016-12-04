@@ -35,11 +35,45 @@ features_selected <- features_names[grep('mean[(][)]|std[(][)]',features_names$f
 ```
 
 ##3. Merge train and test data
-This part of the script merges the train and test data. For both the train and test data (the variable test or train denoted as `i`) the activity labels (`y_i.txt`), the measurements (`X_i.txt`) and the subject ids (`subject_i.txt`) are read in. Subsequently only the measurements related to the mean and standard deviation are selected using the selected features from part 2 (stored in the dataframe `features_selected`). The resulting variables are all combined into one dataset (`data[[i]]`), with the subject id as first variable (named `subjectid`), the activity id as second variable (named `activityid`) and the subsequent variables are the features that are only related to the mean and standard deviation of the measurements (inheriting the associated variables names). As a last step the resulting data frames for the train and test data are combined into one data frame (`total_data`).
+This part of the script merges the train and test data. For both the train and test data the activity labels (`y_i.txt`), the measurements (`X_i.txt`) and the subject ids (`subject_i.txt`) are read in, where `i` is either equal to `train` or `test`. 
+```{r eval=F}
+X<-read.table(file.path(datadir,i, paste0('X_', i, '.txt')))
+activity<-read.table(file.path(datadir, i, paste0('y_', i, '.txt')))
+subject<-read.table(file.path(datadir, i, paste0('subject_', i, '.txt')))
+```
+Subsequently only the measurements related to the mean and standard deviation are selected using the selected features from part 2 (stored in the dataframe `features_selected`).
+```{r eval=F}
+X <- X[, features_selected$featureid]
+```
+The resulting variables are all combined into one dataset (`data[[i]]`), with the subject id as first variable (named `subjectid`), the activity id as second variable (named `activityid`) and the subsequent variables are the features that are only related to the mean and standard deviation of the measurements (inheriting the associated variables names). 
+```{r eval=F}
+data[[i]]<- cbind(subject,activity, X)
+names(data[[i]])<-c("subjectid", "activityid", features_selected$featurename)
+```
+As a last step the resulting data frames for the train and test data are combined into one data frame (`total_data`).
+```{r eval=F}
+total_data<- rbind(data[["train"]], data[["test"]])
+```
 
 ##4. Rename activities
-As the variable `activityid` is not as descriptive, the associated activity names are added as variable (named `activityname`) by merging the dataset resulting from step 3 (`total_data`),  with the data coming from `activity_labels.txt`. Subsequently the variable `activityid` is dropped from the data as this variable is not necessary anymore.
+As the variable `activityid` is not as descriptive, the associated activity names are added as variable (named `activityname`) by merging the dataset resulting from step 3 (`total_data`),  with the data coming from `activity_labels.txt`. 
+```{r eval=F}
+total_data<- merge(total_data, activity_names, all.x=T, all.y=F)
+```
+Subsequently the variable `activityid` is dropped from the data as this variable is not necessary anymore.
+```{r eval=F}
+total_data<-total_data[, c("subjectid", "activityname", features_selected$featurename)]
+```
 
 ##5. Create data set with the average of each variable for each activity and each subject.
-Using the data set resulting from step 4 (`total_data`), the mean of all the selected features is determined per activity (`activityname`) and subject (`subjectid`). This is done through the `aggregate` function in R. Before exporting the resulting tidy data set (stored in the data frame`avg_data`), the data is ordered alphabetically with variable `activityname` as first variable and `subjectid` as second variable.
-
+Using the data set resulting from step 4 (`total_data`), the mean of all the selected features is determined per activity (`activityname`) and subject (`subjectid`). This is done through the `aggregate` function in R. 
+```{r eval=F}
+avg_data<- aggregate(total_data[,features_selected$featurename], 
+                     by= list(total_data$activityname, total_data$subjectid), mean)
+names(avg_data)<-c("activityname", "subjectid", features_selected$featurename)
+```
+Before exporting the resulting tidy data set (stored in the data frame`avg_data`), the data is ordered alphabetically with variable `activityname` as first variable and `subjectid` as second variable.
+```{r eval=F}
+avg_data<- avg_data[order(avg_data$activityname, avg_data$subjectid),]
+write.table(avg_data, "avg_data.txt", row.names=F)
+```
