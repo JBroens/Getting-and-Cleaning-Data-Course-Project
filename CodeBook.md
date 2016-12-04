@@ -32,16 +32,16 @@ The first two variables are as follows:
 
 2. `subjectid`: this variable identifies the subject who performed the activity for each window sample. Its range is from 1 to 30. 
 
-The remainder of the variables are the averages of the mean value (`mean()`) and the standard deviation (`std()`) corresponding to the followig signals ('-XYZ' is used to denote 3-axial signals in the X, Y and Z directions.)
+The remainder of the variables are the averages of the mean value (`mean()`) and the standard deviation (`std()`) corresponding to the followig signals ('-XYZ' is used to denote 3-axial signals in the X, Y and Z directions.):
 
- | | 
+ | | |
 --- | --- | ---
-tBodyAcc-XYZ |tGravityAccMag |fBodyGyro-XYZ
-tGravityAcc-XYZ |tBodyAccJerkMag |fBodyAccMag
-tBodyAccJerk-XYZ |tBodyGyroMag |fBodyAccJerkMag
-tBodyGyro-XYZ |tBodyGyroJerkMag |fBodyGyroMag
-tBodyGyroJerk-XYZ |fBodyAcc-XYZ |fBodyGyroJerkMag
-tBodyAccMag |fBodyAccJerk-XYZ | -
+tBodyAcc-XYZ |tGravityAccMag |fBodyGyro-XYZ |
+tGravityAcc-XYZ |tBodyAccJerkMag |fBodyAccMag |
+tBodyAccJerk-XYZ |tBodyGyroMag |fBodyAccJerkMag |
+tBodyGyro-XYZ |tBodyGyroJerkMag |fBodyGyroMag |
+tBodyGyroJerk-XYZ |fBodyAcc-XYZ |fBodyGyroJerkMag |
+tBodyAccMag |fBodyAccJerk-XYZ |  |
 
 The average is taken over all measurements corresponding to one specific combination of activity and subject. The units for the various variables are as follows:
 - Variables related to acceleration (the name contains 'Acc', but not 'AccJerk') are expressed in standard gravity units 'g'. 
