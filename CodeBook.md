@@ -1,7 +1,7 @@
 #Code Book for `avg_data.txt`
 
 ##Source
-The basis for this data is the in the UCI HAR Dataset (Samsung data) downloaded from [https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip] (https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip))
+The basis for this data is the UCI HAR Dataset (Samsung data) downloaded from [https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip] (https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip).
 This data consists of various records representing measurements with the accelerometers and gyroscope from the Samsung Galaxy S smartphone. For each record in the dataset the following information is provided: 
 - Triaxial acceleration from the accelerometer (total acceleration) and the estimated body acceleration. 
 - Triaxial Angular velocity from the gyroscope. 
@@ -10,9 +10,10 @@ This data consists of various records representing measurements with the acceler
 - An identifier of the subject who carried out the experiment.
 
 More information regarding the data is provided in the file `README.txt` associated to this data set. Three other important accompanying files are as follows:
-- `features_info.txt`: Shows information about the variables used on the feature vector.
-- `features.txt`: List of all features.
-- `activity_labels.txt`: Links the class labels with their activity name.
+- `features_info.txt`: shows information about the variables used on the feature vector.
+- `features.txt`: list of all features.
+- `activity_labels.txt`: links the class labels with their activity name.
+
 Another important feature of this data is that it is split into a data set intended for training and another data set intended for testing.
 
 ##Manipulations
@@ -20,15 +21,15 @@ The manipulations on this data are performed with the `run_analysis.R` script. T
 
 ##Variables
 The first two variables are as follows:
-1. `activityname`: A description of the activity for which the measurements have taken place. This variable can take one of the following values:
-- WALKING
-- WALKING_UPSTAIRS
-- WALKING_DOWNSTAIRS
-- SITTING
-- STANDING
-- LAYING
+1. `activityname`: a description of the activity for which the measurements have taken place. This variable can take one of the following values:
++ WALKING
++ WALKING_UPSTAIRS
++ WALKING_DOWNSTAIRS
++ SITTING
++ STANDING
++ LAYING
 
-2. `subjectid`: This variable identifies the subject who performed the activity for each window sample. Its range is from 1 to 30. 
+2. `subjectid`: this variable identifies the subject who performed the activity for each window sample. Its range is from 1 to 30. 
 
 The remainder of the variables are the averages of the mean value (`mean()`) and the standard deviation (`std()) corresponding to the followig signals ('-XYZ' is used to denote 3-axial signals in the X, Y and Z directions.)
 
@@ -46,6 +47,7 @@ The average is taken over all measurements corresponding to one specific combina
 - Variables related to Jerk signals of angular velocity (the name contains 'GyroJerk') are expressed in radians/second^2.
 
 The full list of the remaining variables is:
+
 3.`tBodyAcc-mean()-X`
 4.`tBodyAcc-mean()-Y`
 5.`tBodyAcc-mean()-Z`
