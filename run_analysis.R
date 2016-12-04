@@ -32,10 +32,8 @@ for(i in c("train", "test")){
     ##Select only the measurements related to the mean and standard deviation
     X <- X[, features_selected$featureid]
     
-    ##Combine all variables
+    ##Combine all variables and label the variables
     data[[i]]<- cbind(subject,activity, X)
-    
-    ##Label the variables
     names(data[[i]])<-c("subjectid", "activityid", features_selected$featurename)
 
 }
@@ -56,10 +54,8 @@ avg_data<- aggregate(total_data[,features_selected$featurename],
                      by= list(total_data$activityname, total_data$subjectid), mean)
 names(avg_data)<-c("activityname", "subjectid", features_selected$featurename)
     
-##Order dataset in logical order
+##Order dataset in logical order and export avg data set
 avg_data<- avg_data[order(avg_data$activityname, avg_data$subjectid),]
-
-##Export avg data set
 write.table(avg_data, "avg_data.txt", row.names=F)
 
 
