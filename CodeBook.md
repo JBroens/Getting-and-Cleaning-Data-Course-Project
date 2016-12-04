@@ -21,18 +21,20 @@ The manipulations on this data are performed with the `run_analysis.R` script. T
 
 ##Variables
 The first two variables are as follows:
+
 1. `activityname`: a description of the activity for which the measurements have taken place. This variable can take one of the following values:
-+ WALKING
-+ WALKING_UPSTAIRS
-+ WALKING_DOWNSTAIRS
-+ SITTING
-+ STANDING
-+ LAYING
+    + WALKING
+    + WALKING_UPSTAIRS
+    + WALKING_DOWNSTAIRS
+    + SITTING
+    + STANDING
+    + LAYING
 
 2. `subjectid`: this variable identifies the subject who performed the activity for each window sample. Its range is from 1 to 30. 
 
-The remainder of the variables are the averages of the mean value (`mean()`) and the standard deviation (`std()) corresponding to the followig signals ('-XYZ' is used to denote 3-axial signals in the X, Y and Z directions.)
+The remainder of the variables are the averages of the mean value (`mean()`) and the standard deviation (`std()`) corresponding to the followig signals ('-XYZ' is used to denote 3-axial signals in the X, Y and Z directions.)
 
+--- | --- | ---
 tBodyAcc-XYZ |tGravityAccMag |fBodyGyro-XYZ
 tGravityAcc-XYZ |tBodyAccJerkMag |fBodyAccMag
 tBodyAccJerk-XYZ |tBodyGyroMag |fBodyAccJerkMag
