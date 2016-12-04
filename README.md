@@ -9,10 +9,30 @@ This Github repository contains my submission for the final assigment to the cou
 The remainder of this readme describes how the various components of the `run_analysis.R` script work. 
 
 ## 1. Settings
-In this part of the script the working directory is set to the directory that contains the script and to which the output data (`avg_data.txt`) is exported. Furthermore the name is provided of the folder with all the Samsung data, in our case the subfolder `./UCI HAR Dataset`.
+In this part of the script the working directory is set to the directory that contains the script and to which the output data (`avg_data.txt`) is exported. 
+```{r eval=F}
+setwd(file.path('~', 'datasciencecoursera', 'Getting and Cleaning Data Course Project'))
+```
+Furthermore the name is provided  of the folder with all the Samsung to the variable `datadir`, in our case the subfolder `./UCI HAR Dataset`.
+```{r eval=F}
+datadir<-'UCI HAR Dataset'
+```
 
 ##2. Read in activity and feature names. 
-The activity and feature names are read in from the files `activity_labels.txt` and `features.txt` in the Samsung data set. To improve readibility of the code, the variables from `activity_labels.txt` are relabeled to `activityid` (first column) and `activityname` (second column). The variables from `features.txt` are relabeled to `featureid` (first column) and `featurename` (second column). Using the `grep` function the features are selected that are only related to the mean and standard deviation of the measurements. These features are stored in the data frame `features_selected`. 
+The activity and feature names are read in from the files `activity_labels.txt` and `features.txt` in the Samsung data set. 
+```{r eval=F}
+activity_names<- read.table(file.path(datadir, 'activity_labels.txt'),stringsAsFactors = F)
+features_names<- read.table(file.path(datadir, 'features.txt'), stringsAsFactors = F)
+```
+To improve readibility of the code, the variables from `activity_labels.txt` are relabeled to `activityid` (first column) and `activityname` (second column). The variables from `features.txt` are relabeled to `featureid` (first column) and `featurename` (second column). 
+```{r eval=F}
+names(activity_names)<- c("activityid", "activityname")
+names(features_names)<- c("featureid", "featurename")
+```
+Using the `grep` function the features are selected that are only related to the mean and standard deviation of the measurements. These features are stored in the data frame `features_selected`.
+```{r eval=F}
+features_selected <- features_names[grep('mean[(][)]|std[(][)]',features_names$featurename),]
+```
 
 ##3. Merge train and test data
 This part of the script merges the train and test data. For both the train and test data (the variable test or train denoted as `i`) the activity labels (`y_i.txt`), the measurements (`X_i.txt`) and the subject ids (`subject_i.txt`) are read in. Subsequently only the measurements related to the mean and standard deviation are selected using the selected features from part 2 (stored in the dataframe `features_selected`). The resulting variables are all combined into one dataset (`data[[i]]`), with the subject id as first variable (named `subjectid`), the activity id as second variable (named `activityid`) and the subsequent variables are the features that are only related to the mean and standard deviation of the measurements (inheriting the associated variables names). As a last step the resulting data frames for the train and test data are combined into one data frame (`total_data`).
